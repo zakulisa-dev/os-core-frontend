@@ -1,0 +1,33 @@
+{
+  "language": "Idioma",
+  "wallpaper": "Fondo de pantalla",
+  "theme": "Tema",
+  "reset": "Restablecer",
+  "languages": {
+    "en": "English",
+    "ru": "Русский",
+    "es": "Español",
+    "ja": "日本語",
+    "ko": "한국어",
+    "th": "ไทย",
+    "vi": "Tiếng Việt"
+  },
+  "backgrounds": {
+    "Planet": "Planeta",
+    "Fog": "Niebla",
+    "Sea": "Mar",
+    "Car": "Coche",
+    "Tree": "Árbol",
+    "Cat": "Gato",
+    "Dynamic": "Lluvia (dinámico)",
+    "Dynamic2": "Lluvia 2 (dinámico)",
+    "House": "Casa (dinámico)",
+    "Waterfall": "Cascada (dinámico)"
+  },
+  "themes": {
+    "Dark": "Oscuro",
+    "Light": "Claro",
+    "Blue": "Azul",
+    "Green": "Verde"
+  }
+}

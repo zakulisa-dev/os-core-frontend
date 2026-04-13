@@ -1,0 +1,140 @@
+/* terminal.module.css */
+.wrapper {
+  overflow-x: hidden;
+  overflow-y: scroll;
+  max-height: 100%;
+  padding: 0.4rem;
+  word-wrap: normal;
+  white-space: pre;
+  font-family: 'Ubuntu Mono', monospace;
+  cursor: text;
+}
+
+.wrapper::-webkit-scrollbar {
+  width: 12px;
+  background-color: transparent;
+}
+
+.wrapper::-webkit-scrollbar-track {
+  border-radius: 10px;
+  background-color: transparent;
+  box-shadow: inset 0 0 6px rgb(0 0 0 / 0.3);
+}
+
+.wrapper::-webkit-scrollbar-thumb {
+  border-radius: 0.2rem;
+  background-color: #3b3b3b;
+  box-shadow: inset 0 0 6px rgb(0 0 0 / 0.3);
+}
+
+.content {
+  height: 100%;
+}
+
+.entry {
+  word-wrap: normal;
+}
+
+.commandLine,
+.inputLine {
+  display: flex;
+  font-family: 'Ubuntu Mono', monospace;
+}
+
+.inputForm {
+  width: 100%;
+  margin-left: 0.25rem;
+}
+
+.prompt {
+  white-space: nowrap;
+  flex-shrink: 0;
+  margin-right: 0.25rem;
+}
+
+.user {
+  color: #34d399;
+}
+
+.separator {
+  color: inherit;
+}
+
+.path {
+  color: #c4c4c4;
+}
+
+.dollar {
+  color: inherit;
+}
+
+.command {
+  color: inherit;
+  word-break: break-all;
+}
+
+.interceptorPrompt {
+  color: #34d399;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.input {
+  overflow: hidden;
+  width: 100%;
+  color: inherit;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: 1rem;
+}
+
+.output {
+  margin: 0;
+  padding: 0;
+  word-wrap: normal;
+  white-space: pre;
+  font-family: 'Ubuntu Mono', monospace;
+}
+
+.error {
+  color: #f14c4c;
+}
+
+/* Дополнительные стили для compatibility */
+.terminalText {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.terminalText::-webkit-scrollbar {
+  width: 12px;
+  background-color: transparent;
+}
+
+.terminalText::-webkit-scrollbar-track {
+  border-radius: 10px;
+  background-color: transparent;
+  box-shadow: inset 0 0 6px rgb(0 0 0 / 0.3);
+}
+
+.terminalText::-webkit-scrollbar-thumb {
+  border-radius: 0.2rem;
+  background-color: #3b3b3b;
+  box-shadow: inset 0 0 6px rgb(0 0 0 / 0.3);
+}
+
+.pre {
+  display: flex;
+  font-family: 'Ubuntu Mono', monospace;
+}
+
+.pre form {
+  width: 100%;
+}
+
+.tilda {
+  color: #c4c4c4;
+}

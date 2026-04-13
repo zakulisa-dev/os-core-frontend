@@ -1,0 +1,1 @@
+export { VariableManager } from './variableManager';

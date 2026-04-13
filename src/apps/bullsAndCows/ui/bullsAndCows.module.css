@@ -1,0 +1,288 @@
+/* BullsAndCows.module.css */
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: white;
+  overflow-y: auto;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.title {
+  font-size: 2rem;
+  margin: 0 0 10px 0;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.subtitle {
+  font-size: 1rem;
+  margin: 0;
+  opacity: 0.9;
+}
+
+.gameBoard {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 25px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.gameStatus {
+  text-align: center;
+  margin-bottom: 25px;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.winMessage {
+  background: linear-gradient(45deg, #4CAF50, #8BC34A);
+  padding: 15px;
+  border-radius: 12px;
+  margin-top: 15px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.1rem;
+  box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+  animation: celebration 0.6s ease-out;
+}
+
+@keyframes celebration {
+  0% { transform: scale(0.9); opacity: 0; }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.inputSection {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 25px;
+  justify-content: center;
+  align-items: center;
+}
+
+.input {
+  padding: 12px 16px;
+  font-size: 1.2rem;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+  text-align: center;
+  letter-spacing: 0.2em;
+  font-weight: 600;
+  width: 120px;
+  transition: all 0.3s ease;
+}
+
+.input:focus {
+  outline: none;
+  border-color: #4CAF50;
+  background: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 0 15px rgba(76, 175, 80, 0.4);
+}
+
+.input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+  letter-spacing: normal;
+}
+
+.submitButton {
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(45deg, #4CAF50, #8BC34A);
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+}
+
+.submitButton:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+}
+
+.submitButton:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.submitButton:disabled {
+  background: rgba(255, 255, 255, 0.2);
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.newGameButton {
+  display: block;
+  margin: 0 auto 25px auto;
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: 600;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  border-radius: 8px;
+  background: transparent;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.newGameButton:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: white;
+  transform: translateY(-1px);
+}
+
+.historySection {
+  margin-top: 30px;
+}
+
+.historyTitle {
+  margin: 0 0 15px 0;
+  font-size: 1.2rem;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.historyList {
+  max-height: 200px;
+  overflow-y: auto;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  padding: 15px;
+}
+
+.historyItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  margin-bottom: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  transition: background 0.2s ease;
+}
+
+.historyItem:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.historyItem:last-child {
+  margin-bottom: 0;
+}
+
+.guess {
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: #FFD700;
+}
+
+.result {
+  display: flex;
+  gap: 15px;
+}
+
+.bulls,
+.cows {
+  font-weight: 600;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+
+.bulls {
+  background: rgba(244, 67, 54, 0.3);
+  color: #ffcdd2;
+}
+
+.cows {
+  background: rgba(255, 193, 7, 0.3);
+  color: #fff8e1;
+}
+
+.rulesSection {
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.rulesTitle {
+  margin: 0 0 15px 0;
+  font-size: 1.1rem;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.rulesList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.rulesList li {
+  margin-bottom: 8px;
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.rulesList li strong {
+  color: #FFD700;
+}
+
+/* Scrollbar styling */
+.historyList::-webkit-scrollbar {
+  width: 6px;
+}
+
+.historyList::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+}
+
+.historyList::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 3px;
+}
+
+.historyList::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+  .container {
+    padding: 15px;
+  }
+
+  .title {
+    font-size: 1.5rem;
+  }
+
+  .inputSection {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .input {
+    width: 100%;
+    max-width: 200px;
+  }
+
+  .submitButton {
+    width: 100%;
+    max-width: 200px;
+  }
+}

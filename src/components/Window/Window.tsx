@@ -1,181 +1,145 @@
-// Libraries
-import React, { FC, ReactNode, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { AnimatePresence, motion } from 'framer-motion';
+import React, { FC, useMemo, useRef, useState } from 'react';
 import { Resizable } from 're-resizable';
-import { useTranslation } from 'react-i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faWindowRestore, faTimes, faWindowMinimize } from '@fortawesome/free-solid-svg-icons';
-
-// Redux
-import { setWindowActive, setWindowPosition } from 'src/redux/slices/appsSlice/appsSlice';
-
-// Enums
-import { App } from '@Enums/app.enum';
-
-// Types
-import { RootState } from '@Types/rootState.type';
-
-// Hooks
-import { useDragNDrop } from '@Hooks/useDragNDrop/useDragNDrop';
-import { useApp } from '@Hooks/useApp/useApp';
-
-// Components
+import { faTimes, faWindowMinimize, faWindowRestore } from '@fortawesome/free-solid-svg-icons';
+import { WindowProps } from '@nameless-os/sdk';
 import { Button } from '@Components/Button/Button';
 
-// Utils
-import { getPxFromRem } from '@Utils/getPxFromRem';
-
-// Styles
 import styles from './window.module.css';
+import { useDragNDrop } from '@Hooks';
+import { systemApi } from '../../index';
 
 interface Props {
-  children?: ReactNode;
-  type: App;
+  windowProps: WindowProps;
 }
 
-export const Window: FC<Props> = ({ children, type }: Props) => {
-  const windowPosition = useSelector((state: RootState) => state.apps.appsState[type].windowPosition);
-  const isOpen = useSelector((state: RootState) => state.apps.appsState[type].isOpen);
-  const isCollapsed = useSelector((state: RootState) => state.apps.appsState[type].isCollapsed);
-
-  const [width, setWidth] = useState(getPxFromRem(48));
-  const [height, setHeight] = useState(getPxFromRem(27));
-
+export const Window: FC<Props> = ({ windowProps }: Props) => {
   const windowTop = useRef<HTMLDivElement>(null);
   const ref = useRef<HTMLDivElement>(null);
 
-  const { startDrag, newCoords, isDrag } = useDragNDrop(setWindowPosition, windowTop, windowPosition, type);
+  const { width, height } = windowProps.size;
+  const { top, left } = windowProps.position;
+  const [position, setPosition] = useState({ left, top });
+  const [size, setSize] = useState({ width, height });
 
-  const dispatch = useDispatch();
-  const { t } = useTranslation();
-  const { appIndex, handleClose, handleToggleCollapse } = useApp(type);
+  const MemoizedContent = useMemo(() => {
+    return React.createElement(windowProps.component);
+  }, [windowProps.id]);
 
-  function handleResize(newWidth: number, newHeight: number) {
-    setWidth(newWidth);
-    setHeight(newHeight);
-  }
+  const { startDrag, transform } = useDragNDrop({
+    ref,
+    initialPosition: position,
+    onDrop: (pos) => {
+      systemApi.windowManager.moveWindow(windowProps.id, pos);
+      setPosition(pos);
+    },
+  });
 
-  function handleSetActive() {
-    dispatch(setWindowActive(type));
-  }
-
-  function returnToDefaultSize() {
-    handleResize(getPxFromRem(48), getPxFromRem(27));
-  }
-
-  function windowToFullscreenSize() {
-    handleResize(window.innerWidth, window.innerHeight);
-  }
-
-  function isDocumentFullscreen(): boolean {
-    return document.fullscreenElement?.className.split('_')[1] === 'window';
-  }
-
-  async function handleCloseWithProcessFullscreen() {
-    if (isDocumentFullscreen()) {
-      await document.exitFullscreen();
-      returnToDefaultSize();
-    }
-    handleClose();
-  }
-
-  async function handleToggleCollapseWithProcessFullscreen() {
-    if (isDocumentFullscreen()) {
-      await document.exitFullscreen();
-      returnToDefaultSize();
-    }
-    handleToggleCollapse();
-  }
-
-  async function handleFullscreen() {
-    if (!document.fullscreenElement) {
-      await ref.current!.requestFullscreen();
-      windowToFullscreenSize();
-    } else if (isDocumentFullscreen()) {
-      await document.exitFullscreen();
-      returnToDefaultSize();
-    } else {
-      await document.exitFullscreen();
-      await ref.current!.requestFullscreen();
-      handleResize(window.innerWidth, window.innerHeight);
-    }
+  const handleClose = () => {
+    systemApi.app.stopApp(windowProps.appInstanceId);
   }
 
   return (
-    <AnimatePresence>
-      {isOpen && !isCollapsed && (
-        <motion.div
+    <>
+      {!windowProps.minimized && (
+        // eslint-disable-next-line jsx-a11y/no-static-element-interactions
+        <div
+          data-window-id={windowProps.id}
           className={styles.window}
-          style={{ top: newCoords?.top, left: newCoords?.left, zIndex: 100 - appIndex }}
-          initial={{ scale: 0 }}
-          animate={{ scale: 1 }}
-          exit={{ scale: 0 }}
-          transition={{
-            duration: 0.2,
+          style={{
+            top: windowProps.fullscreen ? 0 : position.top,
+            left: windowProps.fullscreen ? 0 : position.left,
+            zIndex: windowProps.fullscreen ? 1000000 : windowProps.zIndex,
+            border: windowProps.fullscreen ? 'none' : '3px solid #343030',
+            width: windowProps.fullscreen ? '100%' : size.width,
+            height: windowProps.fullscreen ? '100%' : size.height,
+            transform,
           }}
-          data-cy={`window-${type}`}
           ref={ref}
+          onMouseDown={() => systemApi.windowManager.focusWindow(windowProps.id)}
         >
           <Resizable
-            size={{
-              width,
-              height,
-            }}
-            onResizeStop={(e, direction, _ref, d) => {
+            size={windowProps.fullscreen ? { width: '100vw', height: '100vh' } : size}
+            minWidth={600}
+            minHeight={400}
+            maxWidth={windowProps.fullscreen ? '100vw' : window.innerWidth - position.left}
+            maxHeight={windowProps.fullscreen ? '100vh' : window.innerHeight - position.top}
+            onResize={(e, direction, ref, d) => {
               const newWidth = width + d.width;
               const newHeight = height + d.height;
-              handleResize(newWidth, newHeight);
+
+              let newLeft = left;
+              let newTop = top;
+
+              if (direction.includes('left') || direction.includes('Left')) {
+                newLeft = left - d.width;
+              }
+
+              if (direction.includes('top')) {
+                newTop = top - d.height;
+              }
+
+              setPosition({ left: newLeft, top: newTop });
+              setSize({ width: newWidth, height: newHeight });
             }}
-            minWidth={getPxFromRem(48)}
-            bounds="window"
-            lockAspectRatio
+            onResizeStop={() => {
+              systemApi.windowManager.resizeWindow(windowProps.id, size);
+              systemApi.windowManager.moveWindow(windowProps.id, position);
+            }}
+            enable={{
+              top: true,
+              right: true,
+              bottom: true,
+              left: true,
+              topRight: true,
+              bottomRight: true,
+              bottomLeft: true,
+              topLeft: true,
+            }}
           >
-            <div
-              className={`
-                ${styles.windowTop}
-                ${appIndex === 0 ? '' : styles.notActiveWindow}
-                ${isDrag ? styles.grabbed : ''}
-              `}
-              onMouseDown={startDrag}
-              ref={windowTop}
-              tabIndex={0}
-              role="button"
-              aria-grabbed={isDrag}
-            >
-              <div onClick={handleSetActive} className={styles.title} role="button" tabIndex={0}>
-                {t(`apps.${type}`)}
+            {!windowProps.fullscreen ? (
+              <div
+                className={`${styles.windowTop} ${windowProps.focused ? styles.active : styles.inactive}`}
+                style={{ width: windowProps.fullscreen ? '100%' : size.width - 6 }}
+                ref={windowTop}
+                tabIndex={0}
+                role="button"
+                onMouseDown={startDrag}
+              >
+                <div className={styles.title} role="button" tabIndex={0}>
+                  {windowProps.title}
+                </div>
+                <div className={styles.buttonsContainer}>
+                  <Button
+                    className={`${styles.collapseBtn} ${styles.btn}`}
+                    onClick={() => systemApi.windowManager.minimizeWindow(windowProps.id)}
+                    aria-label="minimize window"
+                  >
+                    <FontAwesomeIcon icon={faWindowMinimize}/>
+                  </Button>
+                  <Button
+                    aria-label="toggle fullscreen"
+                    className={`${styles.collapseBtn} ${styles.btn}`}
+                    onClick={() => systemApi.windowManager.toggleFullscreen(windowProps.id)}
+                  >
+                    <FontAwesomeIcon icon={faWindowRestore}/>
+                  </Button>
+                  <Button
+                    className={`${styles.closeBtn} ${styles.btn}`}
+                    aria-label="close window"
+                    onClick={handleClose}
+                  >
+                    <FontAwesomeIcon icon={faTimes}/>
+                  </Button>
+                </div>
               </div>
-              <div className={styles.buttonsContainer}>
-                <Button
-                  className={`${styles.collapseBtn} ${styles.btn}`}
-                  onClick={handleToggleCollapseWithProcessFullscreen}
-                  aria-label="minimize window"
-                >
-                  <FontAwesomeIcon icon={faWindowMinimize} />
-                </Button>
-                <Button
-                  onClick={handleFullscreen}
-                  aria-label="toggle fullscreen"
-                  className={`${styles.collapseBtn} ${styles.btn}`}
-                >
-                  <FontAwesomeIcon icon={faWindowRestore} />
-                </Button>
-                <Button
-                  className={`${styles.closeBtn} ${styles.btn}`}
-                  onClick={handleCloseWithProcessFullscreen}
-                  aria-label="close window"
-                >
-                  <FontAwesomeIcon icon={faTimes} />
-                </Button>
-              </div>
-            </div>
-            <div className={styles.windowBody} onClick={handleSetActive} role="button" tabIndex={0}>
-              {children}
+            ) : null}
+            <div style={{ width: windowProps.fullscreen ? '100vw' : size.width - 6, height: windowProps.fullscreen ? '100vh' : size.height - 35 }} className={styles.windowBody} role="button" tabIndex={0}>
+              {MemoizedContent}
             </div>
           </Resizable>
-        </motion.div>
+        </div>
       )}
-    </AnimatePresence>
+    </>
   );
 };

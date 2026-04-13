@@ -1,4 +1,4 @@
 export interface BaseFetchResult {
-  isLoading: boolean,
-  hasError: boolean,
+  isLoading: boolean;
+  hasError: boolean;
 }

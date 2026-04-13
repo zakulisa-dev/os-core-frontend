@@ -1,0 +1,20 @@
+{
+  "addToDoItem": "Добавить в список дел",
+  "toggleItemWithText": "Переключить элемент с текстом",
+  "deleteItemWithText": "Удалить элемент с текстом",
+  "heading": "Заголовок",
+  "description": "Описание",
+  "status": "Состояние",
+  "inProcess": "В процессе",
+  "completed": "Выполнено",
+  "change": "Изменить",
+  "changeStatus": "Изменить статус",
+  "back": "Назад",
+  "cancel": "Отменить",
+  "save": "Сохранить",
+  "edit": "Изменить",
+  "goToToDoEditPage": "Перейти на страницу изменения дела",
+  "toggleCollapseDescription": "Свернуть/развернуть описание",
+  "headingOfNewToDoItem": "Заголовок нового элемента списка дел",
+  "toDoItemCreateForm": "Форма создания нового элемента списка дел"
+}

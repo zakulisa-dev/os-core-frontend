@@ -2,18 +2,23 @@ module.exports = {
   root: true,
   parser: "@typescript-eslint/parser",
   parserOptions: {
-    project: ["./tsconfig.json"],
+    project: ["./tsconfig.eslint.json"],
+    tsconfigRootDir: __dirname,
+    sourceType: "module"
   },
   plugins: [
     "@typescript-eslint",
-    "prettier"
+    "prettier",
+    "react",
+    "react-hooks",
+    "jsx-a11y"
   ],
   extends: [
-    "prettier",
-    "react-app",
-    "react-app/jest",
-    "airbnb-typescript",
-    "plugin:cypress/recommended"
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:jsx-a11y/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "prettier"
   ],
   rules: {
     "object-curly-newline": 0,
@@ -30,7 +35,33 @@ module.exports = {
     "no-continue": 0,
     "react/jsx-no-bind": 0,
     "react-hooks/exhaustive-deps": 0,
-    "no-param-reassign": ['error', { props: true, ignorePropertyModificationsFor: ['state'] }],
-    "testing-library/no-unnecessary-act": 0
+    "no-param-reassign": ['error', {
+      props: true, ignorePropertyModificationsFor: [
+        'state',
+        'video',
+        'audio',
+        'e',
+        'event',
+        'target',
+        'currentTarget',
+        'nextSibling',
+        'previousSibling',
+        'parentElement'
+      ]
+    }],
+    "testing-library/no-unnecessary-act": 0,
+    "@typescript-eslint/no-unused-vars": 1,
+    "import/extensions": 0,
+    "react/prop-types": 0
+  },
+  settings: {
+    react: {
+      version: "detect"
+    },
+    "import/resolver": {
+      typescript: {
+        project: "./tsconfig.json"
+      }
+    }
   }
 };

@@ -1,0 +1,35 @@
+{
+  "language": "Language",
+  "wallpaper": "Wallpaper",
+  "theme": "Theme",
+  "reset": "Reset",
+  "languages": {
+    "en": "English",
+    "ru": "Русский",
+    "es": "Español",
+    "ja": "日本語",
+    "ko": "한국어",
+    "th": "ไทย",
+    "vi": "Tiếng Việt"
+  },
+  "backgrounds": {
+    "Planet": "Planet",
+    "Fog": "Fog",
+    "Sea": "Sea",
+    "Car": "Car",
+    "Tree": "Tree",
+    "Cat": "Cat",
+    "Dynamic": "Rain (dynamic)",
+    "Dynamic2": "Rain 2 (dynamic)",
+    "House": "House (dynamic)",
+    "Waterfall": "Waterfall (dynamic)",
+    "CustomUrl": "Custom Url",
+    "CustomImage": "Custom Image"
+  },
+  "themes": {
+    "Dark": "Dark",
+    "Light": "Light",
+    "Blue": "Blue",
+    "Green": "Green"
+  }
+}

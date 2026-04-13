@@ -1,0 +1,268 @@
+/* Existing styles */
+.editor {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: #1e1e1e;
+}
+
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1px 12px;
+  background: #2d2d30;
+  border-bottom: 1px solid #3e3e42;
+}
+
+.filename {
+  color: #cccccc;
+  font-size: 14px;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+}
+
+.actions button {
+  padding: 4px 12px;
+  background: #0e639c;
+  color: white;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+  font-size: 12px;
+  transition: background-color 0.2s;
+}
+
+.actions button:hover:not(:disabled) {
+  background: #1177bb;
+}
+
+.actions button:disabled {
+  background: #3c3c3c;
+  cursor: not-allowed;
+}
+
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #cccccc;
+}
+
+/* New welcome screen styles */
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: #1e1e1e;
+  color: #cccccc;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.welcomeContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 40px;
+  background: #1e1e1e;
+}
+
+.welcomeContent {
+  text-align: center;
+  max-width: 400px;
+}
+
+.welcomeContent h2 {
+  margin: 0 0 16px 0;
+  font-size: 32px;
+  font-weight: 300;
+  color: #cccccc;
+  background: linear-gradient(135deg, #0e639c 0%, #1177bb 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.welcomeContent p {
+  margin: 0 0 32px 0;
+  font-size: 16px;
+  color: #a0a0a0;
+  line-height: 1.5;
+}
+
+.actionButtons {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 40px;
+}
+
+.primaryButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 16px 24px;
+  background: linear-gradient(135deg, #0e639c 0%, #1177bb 100%);
+  border: none;
+  border-radius: 4px;
+  color: white;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(14, 99, 156, 0.3);
+}
+
+.primaryButton:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(14, 99, 156, 0.4);
+  background: linear-gradient(135deg, #1177bb 0%, #0e639c 100%);
+}
+
+.primaryButton:active {
+  transform: translateY(0);
+}
+
+.secondaryButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 16px 24px;
+  background: transparent;
+  border: 2px solid #3e3e42;
+  border-radius: 4px;
+  color: #cccccc;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.secondaryButton:hover {
+  background: #2d2d30;
+  border-color: #0e639c;
+  transform: translateY(-1px);
+}
+
+.secondaryButton:active {
+  transform: translateY(0);
+}
+
+.shortcuts {
+  text-align: left;
+  background: #2d2d30;
+  border: 1px solid #3e3e42;
+  border-radius: 4px;
+  padding: 20px;
+  margin-top: 24px;
+}
+
+.shortcuts p {
+  margin: 0 0 12px 0;
+  font-size: 14px;
+  font-weight: 500;
+  color: #cccccc;
+}
+
+.shortcuts ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.shortcuts li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 6px 0;
+  font-size: 14px;
+  color: #a0a0a0;
+}
+
+.shortcuts kbd {
+  background: #1e1e1e;
+  border: 1px solid #3e3e42;
+  border-radius: 3px;
+  padding: 4px 8px;
+  font-size: 12px;
+  font-family: 'Cascadia Code', 'Consolas', 'Monaco', monospace;
+  color: #cccccc;
+  min-width: 60px;
+  text-align: center;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* Animation for smooth transitions */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.welcomeContent {
+  animation: fadeIn 0.6s ease-out;
+}
+
+.actionButtons button:nth-child(1) {
+  animation: fadeIn 0.6s ease-out 0.1s both;
+}
+
+.actionButtons button:nth-child(2) {
+  animation: fadeIn 0.6s ease-out 0.2s both;
+}
+
+.shortcuts {
+  animation: fadeIn 0.6s ease-out 0.3s both;
+}
+
+/* VS Code style file icons */
+.fileIcon {
+  color: #cccccc;
+}
+
+.folderIcon {
+  color: #dcb67a;
+}
+
+.customFileIcon {
+  width: 16px;
+  height: 16px;
+  display: inline-block;
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+  .welcomeContainer {
+    padding: 20px;
+  }
+
+  .welcomeContent h2 {
+    font-size: 24px;
+  }
+
+  .actionButtons {
+    gap: 12px;
+  }
+
+  .primaryButton,
+  .secondaryButton {
+    padding: 12px 20px;
+    font-size: 14px;
+  }
+
+  .shortcuts {
+    padding: 16px;
+  }
+}

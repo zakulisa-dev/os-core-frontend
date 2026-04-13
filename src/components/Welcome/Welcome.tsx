@@ -1,24 +1,11 @@
-// Libraries
-import { FC } from 'react';
-import { useSelector } from 'react-redux';
+import { FC, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
-
-// Assets
-import space from '@Backgrounds/space.webp';
-
-// Types
-import { RootState } from '@Types/rootState.type';
-
-// Interfaces
+import space from '@Backgrounds/space.png';
 import { ChildrenNever } from '@Interfaces/childrenNever.interface';
-
-// Components
-import { Avatar } from '@Components/Avatar/Avatar';
-import { Button } from '@Components/Button/Button';
-
-// Styles
+import { DialogueManager } from '@Features/dialogSystem/DialogueManager';
+import { welcomeFirstVisit, welcomeReturningVisit } from '@Features/dialogSystem/scenarios/welcome.scenario';
+import { DialogueNode } from '@Features/dialogSystem/useDialogue';
 import styles from './welcome.module.css';
 
 interface Props extends ChildrenNever {
@@ -26,15 +13,42 @@ interface Props extends ChildrenNever {
 }
 
 const Welcome: FC<Props> = ({ handleWelcomeClose }: Props) => {
-  const username = useSelector((state: RootState) => state.user.currentUser.username);
-
-  const { t } = useTranslation('welcome');
+  const username = localStorage.getItem('username') || '';
   const navigate = useNavigate();
 
-  function handleGoToLogin() {
-    navigate('/login');
-    sessionStorage.setItem('isWelcomeOpen', 'No');
-  }
+  const scenario = useMemo(() => {
+    const baseScenario = username
+      ? welcomeReturningVisit(username)
+      : welcomeFirstVisit;
+
+    return baseScenario.map((node): DialogueNode => {
+      if (node.id === 'choice_register') {
+        return {
+          ...node,
+          onComplete: () => {
+            sessionStorage.setItem('isWelcomeOpen', 'No');
+            navigate('/register');
+          },
+        };
+      }
+      if (node.id === 'choice_guest') {
+        return {
+          ...node,
+          onComplete: handleWelcomeClose,
+        };
+      }
+      if (node.id === 'choice_login') {
+        return {
+          ...node,
+          onComplete: () => {
+            sessionStorage.setItem('isWelcomeOpen', 'No');
+            navigate('/login');
+          },
+        };
+      }
+      return node;
+    });
+  }, [username, navigate, handleWelcomeClose]);
 
   return (
     <>
@@ -44,32 +58,12 @@ const Welcome: FC<Props> = ({ handleWelcomeClose }: Props) => {
         exit={{ opacity: 0, y: '-50%' }}
         transition={{ duration: 1 }}
       >
-        {username && (
-          <>
-            <Avatar name={username} width={128} height={128} />
-            <p>
-              {`${t('hello')}, ${username}`}
-            </p>
-            <Button className={styles.enter} onClick={handleWelcomeClose}>
-              {t('enter')}
-            </Button>
-            <Button className={styles.goToLogin} onClick={handleGoToLogin}>
-              {t('changeAccount')}
-            </Button>
-          </>
-        ) || (
-          <>
-            <Button className={styles.enter} onClick={handleGoToLogin}>
-              {t('login')}
-            </Button>
-            <p>
-              {t('or')}
-            </p>
-            <Button className={styles.enter} onClick={handleWelcomeClose}>
-              {t('continueAsAGuest')}
-            </Button>
-          </>
-        )}
+        <DialogueManager
+          scenario={scenario}
+          onComplete={handleWelcomeClose}
+          vixieImage={'/assets/images/vixie.jpeg'}
+          foxImage={'/assets/images/fox.jpeg'}
+        />
       </motion.main>
     </>
   );

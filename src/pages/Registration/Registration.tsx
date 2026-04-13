@@ -1,38 +1,23 @@
-// Libraries
 import { FC, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
-// Interfaces
 import { ChildrenNever } from '@Interfaces/childrenNever.interface';
-
-// Assets
 import space from '@Backgrounds/space.webp';
-
-// Types
-import { RootState } from '@Types/rootState.type';
-
-// Features
-import { registration } from '@Features/user/redux/userSlice';
-
-// Components
 import { Button } from '@Components/Button/Button';
 
-// Styles
 import styles from './registration.module.css';
 
 const Registration: FC<ChildrenNever> = () => {
   const [formError, setFormError] = useState('');
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isPasswordVisible2, setIsPasswordVisible2] = useState(false);
-  const registrationError = useSelector((state: RootState) => state.user.registration.error);
-  const isRegistrationLoading = useSelector((state: RootState) => state.user.registration.isLoading);
+  const registrationError = '';
+  const isRegistrationLoading = false;
 
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const {
     register,
     handleSubmit,
@@ -55,28 +40,22 @@ const Registration: FC<ChildrenNever> = () => {
   }
 
   function handleRegistration() {
-    dispatch(registration({
-      username: getValues('username'),
-      password: getValues('password'),
-    }));
   }
 
   return (
     <>
       <div className={styles.overlay} style={{ backgroundImage: `url(${space})` }} />
       <div className={styles.wrapper}>
-        <Button onClick={() => navigate('/')} className={styles.closeBtn}>←</Button>
+        <Button onClick={() => navigate('/')} className={styles.closeBtn}>
+          ←
+        </Button>
         <form className={styles.loginForm} onSubmit={handleSubmit(handleRegistration)}>
-          <span
-            className={`${styles.formErrorDefault} ${formError ? styles.formError : ''}`}
-          >
+          <span className={`${styles.formErrorDefault} ${formError ? styles.formError : ''}`}>
             {formError || 'error'}
           </span>
           <label htmlFor="loginName" className={styles.label}>
-            <span
-              className={`${styles.inputErrorDefault} ${errors.username ? styles.inputError : ''}`}
-            >
-              {errors.username?.message || 'Error'}
+            <span className={`${styles.inputErrorDefault} ${errors.username ? styles.inputError : ''}`}>
+              {(errors.username?.message as never) || 'Error'}
             </span>
             <div className={styles.inputBtnContainer}>
               <div className={styles.empty} />
@@ -109,10 +88,8 @@ const Registration: FC<ChildrenNever> = () => {
             </div>
           </label>
           <label htmlFor="loginPassword" className={styles.label}>
-            <span
-              className={`${styles.inputErrorDefault} ${errors.password ? styles.inputError : ''}`}
-            >
-              {errors.password?.message || 'Error'}
+            <span className={`${styles.inputErrorDefault} ${errors.password ? styles.inputError : ''}`}>
+              {(errors.password?.message as never) || 'Error'}
             </span>
             <div className={styles.inputBtnContainer}>
               <div className={styles.empty} />
@@ -143,10 +120,8 @@ const Registration: FC<ChildrenNever> = () => {
             </div>
           </label>
           <label htmlFor="loginPassword" className={styles.label}>
-            <span
-              className={`${styles.inputErrorDefault} ${errors.passwordConfirmation ? styles.inputError : ''}`}
-            >
-              {errors.passwordConfirmation?.message || 'Error'}
+            <span className={`${styles.inputErrorDefault} ${errors.passwordConfirmation ? styles.inputError : ''}`}>
+              {(errors.passwordConfirmation?.message as never) || 'Error'}
             </span>
             <div className={styles.inputBtnContainer}>
               <div className={styles.empty} />

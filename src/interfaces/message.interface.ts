@@ -3,11 +3,11 @@ export interface Message {
   createdAt: Date;
   id: number;
   owner: {
-    username: string,
-    photo: string,
-    id: number,
-  },
-  toUserId?: number,
-  toRoomId?: number,
-  listOfReaders: number[],
+    username: string;
+    photo: string;
+    id: number;
+  };
+  toUserId?: number;
+  toRoomId?: number;
+  listOfReaders: number[];
 }

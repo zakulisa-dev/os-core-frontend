@@ -1,29 +1,37 @@
-// Libraries
 import React, { Suspense } from 'react';
-import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
-
-// Redux
-import store from 'src/redux/store';
-
-// Init
-import { initSetry } from './sentry.init';
-
-// Styles
+import { createRoot } from 'react-dom/client';
 import './index.css';
-
-// Components
 import App from './App';
+import { initCoreServices } from './initCoreServices';
+import { AppId, CoreAPI } from '@nameless-os/sdk';
+import { registerBaseApps } from './api/app/initAppAPI';
+import { IconManager } from '@Features/icon/icon.manager';
 
-initSetry();
+const container = document.getElementById('root');
+const root = createRoot(container!);
 
-ReactDOM.render(
+const systemApi: CoreAPI = await initCoreServices();
+export const iconManagerInstance = new IconManager(systemApi);
+window.nameless_os = {
+  registerExternalApp: (app) => {
+    if (app.persistentAppTypeId !== 'minesweeper') {
+      iconManagerInstance.createAppIcon(app.persistentAppTypeId, app);
+    }
+
+    return {
+      appId: systemApi.app.registerApp(app) as AppId,
+      apis: systemApi,
+    };
+  },
+};
+registerBaseApps(systemApi);
+
+root.render(
   <React.StrictMode>
     <Suspense fallback="">
-      <Provider store={store}>
-        <App />
-      </Provider>
+      <App/>
     </Suspense>
   </React.StrictMode>,
-  document.getElementById('root'),
 );
+
+export { systemApi };

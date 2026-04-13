@@ -1,0 +1,32 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  width: 30%;
+  max-width: 24rem;
+  margin: 1rem 0 2rem;
+
+  user-select: none;
+  text-align: center;
+}
+
+.level {
+  margin-top: 2rem;
+}
+
+.wrapper button {
+  min-width: 10rem;
+}
+
+.buttons {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.btn {
+  padding: 0.5rem;
+}

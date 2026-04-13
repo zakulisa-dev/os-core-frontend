@@ -1,19 +1,14 @@
-// Libraries
 import React, { FC, useLayoutEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCompress, faExpand } from '@fortawesome/free-solid-svg-icons';
 
-// Interfaces
 import { ChildrenNever } from '@Interfaces/childrenNever.interface';
-
-// Components
 import { Button } from '@Components/Button/Button';
 
-// Styles
 import styles from './fullscreenButton.module.css';
 
 export const FullscreenButton: FC<ChildrenNever> = () => {
-  const [isFullscreen, setIsFullscreen] = useState<Boolean>(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
 
   useLayoutEffect(() => {
     const toggleFullscreen = () => {
@@ -39,11 +34,11 @@ export const FullscreenButton: FC<ChildrenNever> = () => {
       className={styles.fullscreenButtonContainer}
       aria-label="toggle fullscreen"
     >
-      {
-        isFullscreen ?
-          (<FontAwesomeIcon icon={faCompress} className={styles.fullscreenButton} />)
-          : (<FontAwesomeIcon icon={faExpand} className={styles.fullscreenButton} />)
-      }
+      {isFullscreen ? (
+        <FontAwesomeIcon icon={faCompress} className={styles.fullscreenButton} />
+      ) : (
+        <FontAwesomeIcon icon={faExpand} className={styles.fullscreenButton} />
+      )}
     </Button>
   );
 };

@@ -10,6 +10,10 @@
   font-size: 1rem;
 }
 
+.transparent {
+  background-color: transparent;
+}
+
 .button:disabled {
   cursor: default;
 }

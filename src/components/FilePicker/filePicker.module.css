@@ -1,0 +1,487 @@
+/* filePicker.module.css */
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999999;
+  backdrop-filter: blur(4px);
+}
+
+.filePicker {
+  background: var(--windowBodyBackground, rgb(23, 23, 24));
+  border: 1px solid var(--secondaryColor, #282828);
+  border-radius: 8px;
+  width: 90vw;
+  max-width: 800px;
+  height: 80vh;
+  max-height: 600px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  color: var(--fontColor, #ececec);
+  font-family: 'Nunito', sans-serif;
+  user-select: none;
+}
+
+/* Header */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--secondaryColor, #282828);
+  background: var(--windowTopBackground, rgba(23, 23, 24, 0.97));
+}
+
+.title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  color: var(--fontColor, #ececec);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+}
+
+.closeButton:hover {
+  background: var(--secondaryColor, #282828);
+}
+
+.closeButton svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* Toolbar */
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background: var(--windowTopBackground, rgba(23, 23, 24, 0.97));
+  border-bottom: 1px solid var(--secondaryColor, #282828);
+}
+
+.navButtons {
+  display: flex;
+  gap: 4px;
+}
+
+.navBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: var(--secondaryColor, #282828);
+  border: none;
+  border-radius: 4px;
+  color: var(--fontColor, #ececec);
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.navBtn:hover:not(:disabled) {
+  background: var(--onHoverBottomTab, #717272);
+}
+
+.navBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.navBtn svg {
+  width: 14px;
+  height: 14px;
+}
+
+.viewToggle {
+  display: flex;
+  gap: 2px;
+}
+
+.toggleBtn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: var(--secondaryColor, #282828);
+  border: none;
+  border-radius: 4px;
+  color: var(--fontColor, #ececec);
+  cursor: pointer;
+  font-size: 12px;
+  transition: all 0.2s;
+}
+
+.toggleBtn:hover {
+  background: var(--onHoverBottomTab, #717272);
+}
+
+.toggleBtn.active {
+  background: var(--activeBottomTab, #272827);
+  color: var(--bottomTabBorder, #c1c3c1);
+}
+
+.toggleBtn svg {
+  width: 12px;
+  height: 12px;
+}
+
+/* Address Bar */
+.addressBar {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--secondaryColor, #282828);
+}
+
+.pathInput {
+  width: 100%;
+  padding: 6px 12px;
+  background: var(--windowBodyBackground, rgb(23, 23, 24));
+  border: 1px solid var(--secondaryColor, #282828);
+  border-radius: 4px;
+  color: var(--fontColor, #ececec);
+  font-size: 14px;
+}
+
+.pathInput:focus {
+  outline: none;
+  border-color: var(--bottomTabBorder, #c1c3c1);
+}
+
+/* Search Bar */
+.searchBar {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--secondaryColor, #282828);
+}
+
+.searchContainer {
+  position: relative;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: rgba(var(--fontColor-rgb, 236, 236, 236), 0.6);
+  width: 14px;
+  height: 14px;
+}
+
+.searchInput {
+  width: 100%;
+  padding: 8px 12px 8px 36px;
+  background: var(--windowBodyBackground, rgb(23, 23, 24));
+  border: 1px solid var(--secondaryColor, #282828);
+  border-radius: 4px;
+  color: var(--fontColor, #ececec);
+  font-size: 14px;
+}
+
+.searchInput:focus {
+  outline: none;
+  border-color: var(--bottomTabBorder, #c1c3c1);
+}
+
+.searchInput::placeholder {
+  color: rgba(var(--fontColor-rgb, 236, 236, 236), 0.5);
+}
+
+/* Error Bar */
+.errorBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background-color: #722f37;
+  color: #f8d7da;
+  font-size: 13px;
+  border-bottom: 1px solid var(--secondaryColor, #282828);
+}
+
+.closeError {
+  background: none;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  padding: 2px;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+}
+
+.closeError:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.closeError svg {
+  width: 12px;
+  height: 12px;
+}
+
+/* Content Area */
+.content {
+  flex: 1;
+  overflow: auto;
+  background: var(--windowBodyBackground, rgb(23, 23, 24));
+}
+
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  color: rgba(var(--fontColor-rgb, 236, 236, 236), 0.7);
+  font-size: 14px;
+}
+
+.emptyState {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  color: rgba(var(--fontColor-rgb, 236, 236, 236), 0.5);
+  font-size: 14px;
+  text-align: center;
+  font-style: italic;
+}
+
+/* File List */
+.fileList {
+  padding: 12px;
+}
+
+.fileItem {
+  display: grid;
+  grid-template-columns: 32px 1fr auto;
+  gap: 12px;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  align-items: center;
+}
+
+.fileItem:hover {
+  background: var(--onHoverBottomTab, #717272);
+}
+
+.fileItem.selected {
+  background: var(--activeBottomTab, #272827);
+}
+
+.fileItemIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fileItemName {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 14px;
+}
+
+.fileItemSize {
+  font-size: 12px;
+  color: rgba(var(--fontColor-rgb, 236, 236, 236), 0.7);
+  text-align: right;
+  min-width: 60px;
+}
+
+/* Recent Files */
+.recentFiles {
+  padding: 12px;
+}
+
+.recentFileItem {
+  display: grid;
+  grid-template-columns: 32px 1fr auto;
+  gap: 12px;
+  padding: 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  align-items: center;
+}
+
+.recentFileItem:hover {
+  background: var(--onHoverBottomTab, #717272);
+}
+
+.recentFileIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.recentFileInfo {
+  overflow: hidden;
+}
+
+.recentFileName {
+  font-size: 14px;
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-bottom: 2px;
+}
+
+.recentFilePath {
+  font-size: 12px;
+  color: rgba(var(--fontColor-rgb, 236, 236, 236), 0.6);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.recentFileDate {
+  font-size: 11px;
+  color: rgba(var(--fontColor-rgb, 236, 236, 236), 0.5);
+  text-align: right;
+  white-space: nowrap;
+}
+
+/* Footer */
+.footer {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px 20px;
+  border-top: 1px solid var(--secondaryColor, #282828);
+  background: var(--windowTopBackground, rgba(23, 23, 24, 0.97));
+}
+
+.fileNameInput {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.fileNameInput label {
+  font-size: 13px;
+  color: var(--fontColor, #ececec);
+  font-weight: 500;
+}
+
+.fileNameField {
+  width: 100%;
+  padding: 8px 12px;
+  background: var(--windowBodyBackground, rgb(23, 23, 24));
+  border: 1px solid var(--secondaryColor, #282828);
+  border-radius: 4px;
+  color: var(--fontColor, #ececec);
+  font-size: 14px;
+  transition: border-color 0.2s;
+}
+
+.fileNameField:focus {
+  outline: none;
+  border-color: var(--bottomTabBorder, #c1c3c1);
+}
+
+.fileNameField::placeholder {
+  color: rgba(var(--fontColor-rgb, 236, 236, 236), 0.5);
+}
+
+.footerButtons {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.cancelButton {
+  padding: 8px 16px;
+  background: var(--secondaryColor, #282828);
+  border: 1px solid var(--secondaryColor, #282828);
+  border-radius: 4px;
+  color: var(--fontColor, #ececec);
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+  min-width: 80px;
+}
+
+.cancelButton:hover {
+  background: var(--onHoverBottomTab, #717272);
+  border-color: var(--onHoverBottomTab, #717272);
+}
+
+.confirmButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: var(--bottomTabBorder, #c1c3c1);
+  border: 1px solid var(--bottomTabBorder, #c1c3c1);
+  border-radius: 4px;
+  color: var(--windowBodyBackground, rgb(23, 23, 24));
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  min-width: 80px;
+  justify-content: center;
+}
+
+.confirmButton:hover:not(:disabled) {
+  background: #d4d6d4;
+  border-color: #d4d6d4;
+  transform: translateY(-1px);
+}
+
+.confirmButton:disabled {
+  background: var(--secondaryColor, #282828);
+  border-color: var(--secondaryColor, #282828);
+  color: rgba(var(--fontColor-rgb, 236, 236, 236), 0.5);
+  cursor: not-allowed;
+  transform: none;
+}
+
+.confirmButton svg {
+  width: 12px;
+  height: 12px;
+}
+
+/* File icons */
+.folderIcon {
+  color: #ffd700;
+  width: 16px;
+  height: 16px;
+}
+
+.fileIcon {
+  color: rgba(var(--fontColor-rgb, 236, 236, 236), 0.7);
+  width: 16px;
+  height: 16px;
+}
+
+.customFileIcon {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+}

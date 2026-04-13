@@ -1,0 +1,22 @@
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: transparent;
+}
+
+.container > * {
+  flex-shrink: 0;
+}
+
+.container > *:nth-child(3) {
+  flex: 1;
+  overflow: hidden;
+}
+
+@media (max-width: 768px) {
+  .container {
+    height: 100vh;
+  }
+}

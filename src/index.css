@@ -11,11 +11,18 @@
 }
 
 :root {
-  --topBarHeight: 4vh;
-  --bottomPartHeight: 4vh;
+  --topBarHeight: 30px;
+  --bottomPartHeight: 40px;
   --boxShadow6: 6px 3px 6px #000;
 
-  font-size: 2vh;
+  font-size: 14px;
+}
+
+html2canvas-container,
+iframe[src*="html2canvas"] {
+  pointer-events: none !important;
+  cursor: inherit !important;
+  z-index: -999999 !important;
 }
 
 .darkTheme {
@@ -26,14 +33,12 @@
 
   /* Window */
   --windowTopBackground: rgb(23 23 24 / 0.97);
+  --windowTopBackgroundInactive: #2c2c2e;
   --windowBodyBackground: rgb(23 23 24);
 
   /* Calculator */
   --calculatorBackground: rgb(31 31 31);
   --calculatorInputBorder: #515151;
-
-  /* Minesweeper */
-  --minesweeeperNodeDefaultBackground: #292929;
 
   /* BottomTab */
   --bottomTabBorder: #c1c3c1;
@@ -42,6 +47,7 @@
   --onHoverBottomTab: #717272;
   --onActiveBottomTab: #272827;
   --bottomTabBackground: transparent;
+  --bottomTabSecondaryBackground: rgba(25, 25, 25, 0.97);
 
   /* Avatar */
   --avatarBackgroundColor: #696969;
@@ -59,13 +65,11 @@
   /* Window */
   --windowTopBackground: rgb(255 255 255 / 0.97);
   --windowBodyBackground: rgb(210 210 210);
+  --windowTopBackgroundInactive: #d6d6d6;
 
   /* Calculator */
   --calculatorBackground: rgb(193 193 193);
   --calculatorInputBorder: #000;
-
-  /* Minesweeper */
-  --minesweeeperNodeDefaultBackground: #b5b5b5;
 
   /* BottomTab */
   --bottomTabBorder: #1e6cc1;
@@ -82,64 +86,60 @@
 
 .blueTheme {
   /* Global */
-  --layoutBackgroundColor: #446acf;
-  --fontColor: #efefef;
-  --secondaryColor: #0463a7;
+  --layoutBackgroundColor: #3a59a5;
+  --fontColor: #f0f4f8;
+  --secondaryColor: #2b4d83;
 
   /* Window */
-  --windowTopBackground: rgb(83 176 241 / 0.97);
-  --windowBodyBackground: #1387d6;
+  --windowTopBackground: rgba(66, 123, 198, 0.97); /* Активное окно */
+  --windowTopBackgroundInactive: rgba(54, 94, 158, 0.6); /* Неактивное */
+  --windowBodyBackground: #174f8e;
 
   /* Calculator */
-  --calculatorBackground: rgb(45 155 214);
-  --calculatorInputBorder: #021251;
-
-  /* Minesweeper */
-  --minesweeeperNodeDefaultBackground: #2c41a9;
+  --calculatorBackground: #2363a4;
+  --calculatorInputBorder: #031a46;
 
   /* BottomTab */
   --bottomTabBorder: #b8b8b8;
-  --activeBottomTab: #041c5f;
-  --closedBottomTab: #353535;
-  --onHoverBottomTab: #072b9b;
-  --onActiveBottomTab: #041c5f;
+  --activeBottomTab: #0a2b7d;
+  --closedBottomTab: #2f2f2f;
+  --onHoverBottomTab: #0e3ea5;
+  --onActiveBottomTab: #0a2b7d;
   --bottomTabBackground: transparent;
 
   /* Avatar */
-  --avatarBackgroundColor: #04266e;
+  --avatarBackgroundColor: #0c2e60;
 
-  color: #efefef;
+  color: #f0f4f8;
 }
 
 .greenTheme {
   /* Global */
-  --layoutBackgroundColor: #43ae58;
-  --fontColor: #efefef;
-  --secondaryColor: #439440;
+  --layoutBackgroundColor: #3d934d;
+  --fontColor: #effff0;
+  --secondaryColor: #2c7c2a;
 
   /* Window */
-  --windowTopBackground: rgb(8 164 31 / 0.97);
-  --windowBodyBackground: #43ae58;
+  --windowTopBackground: rgba(28, 154, 53, 0.97);
+  --windowTopBackgroundInactive: rgba(22, 107, 38, 0.6);
+  --windowBodyBackground: #2e9443;
 
   /* Calculator */
-  --calculatorBackground: rgb(24 110 20);
-  --calculatorInputBorder: #024e04;
+  --calculatorBackground: #1b6320;
+  --calculatorInputBorder: #013e02;
 
   /* BottomTab */
-  --bottomTabBorder: #c1c3c1;
-  --activeBottomTab: #045416;
-  --closedBottomTab: #5b5b5b;
-  --onHoverBottomTab: #27be6e;
-  --onActiveBottomTab: #c6c6c6;
-  --bottomTabBackground: #0c8a18;
+  --bottomTabBorder: #a9c1ab;
+  --activeBottomTab: #036319;
+  --closedBottomTab: #4e4e4e;
+  --onHoverBottomTab: #1faa4b;
+  --onActiveBottomTab: #c4d4c4;
+  --bottomTabBackground: #0b7317;
 
   /* Avatar */
-  --avatarBackgroundColor: #257230;
+  --avatarBackgroundColor: #1e5f29;
 
-  /* Minesweeper */
-  --minesweeeperNodeDefaultBackground: #024e11;
-
-  color: #efefef;
+  color: #effff0;
 }
 
 body {
@@ -156,12 +156,4 @@ body {
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, monospace;
-}
-
-/* stylelint-disable */
-.Toastify__toast--dark {
-  bottom: 1rem !important;
-
-  border-radius: 0.5rem !important;
-  background-color: var(--layoutBackgroundColor) !important;
 }

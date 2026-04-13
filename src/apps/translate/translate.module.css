@@ -1,0 +1,66 @@
+.container {
+  display: flex;
+
+  height: 80%;
+  padding: 1rem;
+}
+
+.reqContainer,
+.resContainer {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+  width: 50%;
+  height: 100%;
+}
+
+.container select,
+.container textarea {
+  border: none;
+  background-color: var(--secondaryColor);
+}
+
+.container textarea {
+  resize: none;
+}
+
+.container textarea,
+.response {
+  width: 70%;
+  height: 100%;
+  margin-top: 1rem;
+  padding: 0.4rem;
+
+  background-color: var(--secondaryColor);
+
+  font-size: 1rem;
+}
+
+.btnContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  height: 20%;
+}
+
+.btnContainer button {
+  width: 10rem;
+  padding: 0.5rem;
+
+  cursor: pointer;
+
+  border: none;
+  border-radius: 2px;
+  background-color: var(--secondaryColor);
+
+  font-size: 1rem;
+}
+
+.container select {
+  min-width: 6rem;
+  margin-left: 1rem;
+
+  font-size: 1rem;
+}

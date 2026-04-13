@@ -1,0 +1,33 @@
+{
+  "language": "言語",
+  "wallpaper": "壁紙",
+  "theme": "テーマ",
+  "reset": "リセット",
+  "languages": {
+    "en": "English",
+    "ru": "Русский",
+    "es": "Español",
+    "ja": "日本語",
+    "ko": "한국어",
+    "th": "ไทย",
+    "vi": "Tiếng Việt"
+  },
+  "backgrounds": {
+    "Planet": "惑星",
+    "Fog": "霧",
+    "Sea": "海",
+    "Car": "車",
+    "Tree": "木",
+    "Cat": "猫",
+    "Dynamic": "雨（動的）",
+    "Dynamic2": "雨2（動的）",
+    "House": "家（動的）",
+    "Waterfall": "滝（動的）"
+  },
+  "themes": {
+    "Dark": "ダーク",
+    "Light": "ライト",
+    "Blue": "ブルー",
+    "Green": "グリーン"
+  }
+}

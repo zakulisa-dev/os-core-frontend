@@ -1,0 +1,23 @@
+{
+  "availableCommands": "Available commands",
+  "unknownCommand": "Unknown command",
+  "typeHelp": "Type \"help\" to view available commands",
+  "appOpen": "App is open",
+  "openHelpInfo": "This command opens app",
+  "availableApps": "Available apps",
+  "unknownApp": "Unknown app",
+  "wrongCommand": "Wrong command, please try again",
+  "openExample": "Syntax: open \"name of app\"",
+  "changeHelpInfo": "This command changes value of selected category",
+  "availableCategories": "Available categories",
+  "changeExample": "Syntax: change \"category to change\" \"new value\"",
+  "unknownCategory": "Unknown category",
+  "themeChange": "Theme is change",
+  "availableThemes": "Available themes",
+  "changeThemeHelpInfo": "This command changes theme",
+  "unknownTheme": "Unknown theme",
+  "languageChange": "Language is change",
+  "unknownLanguage": "Unknown language",
+  "availableLanguages": "Available languages: ru(Russian), en(English)",
+  "changeLanguageHelpInfo": "This command changes language"
+}

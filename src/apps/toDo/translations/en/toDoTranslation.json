@@ -1,0 +1,20 @@
+{
+  "addToDoItem": "Add to do item",
+  "toggleItemWithText": "Toggle item with text",
+  "deleteItemWithText": "Delete item with text",
+  "heading": "Heading",
+  "description": "Description",
+  "status": "Status",
+  "inProcess": "In process",
+  "completed": "Completed",
+  "change": "Change",
+  "changeStatus": "Change status",
+  "back": "Back",
+  "cancel": "Cancel",
+  "save": "Save",
+  "edit": "Edit",
+  "goToToDoEditPage": "Go to to do edit page",
+  "toggleCollapseDescription": "Toggle collapse description",
+  "headingOfNewToDoItem": "Heading of new to do item",
+  "toDoItemCreateForm": "To do item create form"
+}

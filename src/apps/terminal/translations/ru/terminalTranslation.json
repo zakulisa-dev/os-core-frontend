@@ -1,0 +1,23 @@
+{
+  "availableCommands": "Доступные команды",
+  "unknownCommand": "Неизвестная команда",
+  "typeHelp": "Напишите \"help\", чтобы посмотреть доступные команды",
+  "appOpen": "Приложение открыто",
+  "openHelpInfo": "Эта команда открывает приложение",
+  "availableApps": "Доступные приложения",
+  "unknownApp": "Неизвестное приложение",
+  "wrongCommand": "Неправильная команда, пожалуйста, попробуйте ещё раз",
+  "openExample": "Синтаксис: open \"название приложения\"",
+  "changeHelpInfo": "Эта команда изменяет значение выбранной категории",
+  "availableCategories": "Доступные категории",
+  "changeExample": "Синтаксис: change \"категория\" \"новое значение\"",
+  "unknownCategory": "Неизвестная категория",
+  "themeChange": "Тема изменена",
+  "availableThemes": "Доступные темы",
+  "changeThemeHelpInfo": "Эта команда изменяет тему",
+  "unknownTheme": "Неизвестная тема",
+  "languageChange": "Язык изменен",
+  "unknownLanguage": "Неизвестный язык",
+  "availableLanguages": "Доступные языки: ru(Русский), en(Английский)",
+  "changeLanguageHelpInfo": "Эта команда изменяет язык"
+}

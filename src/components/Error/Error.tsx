@@ -1,15 +1,10 @@
-// Libraries
 import React, { FC } from 'react';
 import { faArrowsRotate } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-// Interfaces
 import { ChildrenNever } from '@Interfaces/childrenNever.interface';
-
-// Components
 import { Button } from '@Components/Button/Button';
 
-// Styles
 import styles from './error.module.css';
 
 interface Props extends ChildrenNever {
@@ -24,5 +19,7 @@ const Error: FC<Props> = React.memo(({ refetch }: Props) => (
     </Button>
   </div>
 ));
+
+Error.displayName = 'Error';
 
 export { Error };

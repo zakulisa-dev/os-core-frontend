@@ -1,0 +1,22 @@
+.difficulties {
+  padding-top: 3rem;
+
+  user-select: none;
+  text-align: center;
+}
+
+.difficultyButton {
+  padding: 0.5rem;
+}
+
+.difficultiesList {
+  list-style: none;
+}
+
+.difficultiesList li {
+  padding-top: 1.5rem;
+}
+
+.difficultiesList button {
+  min-width: 10rem;
+}

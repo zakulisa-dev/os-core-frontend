@@ -1,0 +1,27 @@
+.operationHistory {
+  width: 100%;
+  margin-top: 0.5rem;
+
+  list-style: square;
+  list-style-position: inside;
+
+  user-select: none;
+}
+
+.operation0 {
+  height: 1.2rem;
+
+  opacity: 0.65;
+}
+
+.operation1 {
+  height: 1.2rem;
+
+  opacity: 0.35;
+}
+
+.operation2 {
+  height: 1.2rem;
+
+  opacity: 0.1;
+}

@@ -1,99 +1,112 @@
-// Libraries
-import { ActionCreatorWithPayload } from '@reduxjs/toolkit';
-import React, { RefObject, useCallback, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { RefObject, useCallback, useEffect, useState } from 'react';
+import { Nullable } from '@nameless-os/sdk';
 
-// Utils
-import { getPxFromRem } from 'src/utils/getPxFromRem';
+interface Position {
+  top: number;
+  left: number;
+}
 
-// Enums
-import { App } from '@Enums/app.enum';
+type UseDragNDropProps = {
+  ref: RefObject<Nullable<HTMLDivElement>>;
+  initialPosition: Position;
+  onDrop: (newPosition: Position) => void;
+  bounds?: {
+    top?: number;
+    left?: number;
+    right?: number;
+    bottom?: number;
+  };
+  minVisibleWidth?: number;
+  minVisibleHeight?: number;
+};
 
-// Types
-import { Coordinates } from '@Interfaces/coordinates.interface';
-
-// Redux
-import { setWindowActive } from 'src/redux/slices/appsSlice/appsSlice';
-
-const useDragNDrop = (
-  changeCoordinates: ActionCreatorWithPayload<{
-    type: App, coordinates: Coordinates
-  }>, element: RefObject<HTMLDivElement>, coords: Coordinates, type: App,
-) => {
-  const [topCoordinatesLocal, setTopCoordinatesLocal] = useState(coords.top);
-  const [leftCoordinatesLocal, setLeftCoordinatesLocal] = useState(coords.left);
-  const [shiftLeft, setShiftLeft] = useState(0);
-  const [shiftTop, setShiftTop] = useState(0);
-  const [isDrag, setIsDrag] = useState(false);
-
-  const dispatch = useDispatch();
+export const useDragNDrop = ({
+                               ref,
+                               initialPosition,
+                               onDrop,
+                               bounds,
+                               minVisibleWidth = 50,
+                               minVisibleHeight = 30,
+                             }: UseDragNDropProps) => {
+  const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
+  const [isDragging, setIsDragging] = useState(false);
+  const [shift, setShift] = useState({ x: 0, y: 0 });
 
   const drag = useCallback(
     (event: MouseEvent) => {
-      const heightOfWindow = element!.current?.getBoundingClientRect().height || 0;
-      const widthOfWindow = element!.current?.getBoundingClientRect().width || 0;
-      const topLimit = getPxFromRem(2.2);
-      const leftLimit = 0;
-      const bottomLimit = window.innerHeight - heightOfWindow - topLimit;
-      const rightLimit = window.innerWidth - widthOfWindow;
+      const el = ref.current;
+      if (!el) return;
 
-      let left = event.pageX - shiftLeft;
-      let top = event.pageY - shiftTop;
+      const rect = el.getBoundingClientRect();
+      const width = rect.width;
+      const height = rect.height;
 
-      if (top < topLimit) {
-        top = topLimit;
-      }
-      if (left < leftLimit) {
-        left = leftLimit;
-      }
-      if (top > bottomLimit) {
-        top = bottomLimit;
-      }
-      if (left > rightLimit) {
-        left = rightLimit;
-      }
+      const viewportWidth = document.documentElement.clientWidth;
+      const viewportHeight = document.documentElement.clientHeight;
 
-      setTopCoordinatesLocal(`${top / getPxFromRem(1)}rem`);
-      setLeftCoordinatesLocal(`${left / getPxFromRem(1)}rem`);
+      const limitTop = bounds?.top ?? -height + minVisibleHeight;
+      const limitLeft = bounds?.left ?? -width + minVisibleWidth;
+      const limitBottom = bounds?.bottom ?? viewportHeight - minVisibleHeight;
+      const limitRight = bounds?.right ?? viewportWidth - minVisibleWidth;
+
+      let newLeft = event.clientX - shift.x;
+      let newTop = event.clientY - shift.y;
+
+      newTop = Math.max(limitTop, Math.min(newTop, limitBottom));
+      newLeft = Math.max(limitLeft, Math.min(newLeft, limitRight));
+
+      setDragOffset({
+        x: newLeft - initialPosition.left,
+        y: newTop - initialPosition.top,
+      });
     },
-    [element, shiftLeft, shiftTop],
+    [ref, shift, bounds, initialPosition, minVisibleWidth, minVisibleHeight],
   );
 
   const stopDrag = useCallback(() => {
-    dispatch(
-      changeCoordinates({
-        type,
-        coordinates: {
-          top: topCoordinatesLocal,
-          left: leftCoordinatesLocal,
-        },
-      }),
-    );
+    const newPos: Position = {
+      top: initialPosition.top + dragOffset.y,
+      left: initialPosition.left + dragOffset.x,
+    };
+
+    setIsDragging(false);
+    onDrop(newPos);
+    setDragOffset({ x: 0, y: 0 });
+
     document.removeEventListener('mousemove', drag);
     document.removeEventListener('mouseup', stopDrag);
-    setIsDrag(false);
-  }, [changeCoordinates, dispatch, drag, element, leftCoordinatesLocal, topCoordinatesLocal, type]);
+  }, [drag, dragOffset, initialPosition, onDrop]);
 
-  const startDrag = (event: React.MouseEvent) => {
-    event.preventDefault();
-    dispatch(setWindowActive(type));
-    setShiftLeft(event.clientX - element.current!.getBoundingClientRect().x);
-    setShiftTop(event.clientY - element.current!.getBoundingClientRect().y);
-    setIsDrag(true);
-  };
+  const startDrag = useCallback(
+    (event: React.MouseEvent) => {
+      const el = ref.current;
+      if (!el) return;
+      event.preventDefault();
+
+      const rect = el.getBoundingClientRect();
+      setShift({
+        x: event.clientX - rect.x,
+        y: event.clientY - rect.y,
+      });
+
+      setIsDragging(true);
+    },
+    [ref],
+  );
 
   useEffect(() => {
-    if (!isDrag) return;
+    if (!isDragging) return;
     document.addEventListener('mousemove', drag);
     document.addEventListener('mouseup', stopDrag);
-  }, [isDrag, drag, stopDrag]);
+    return () => {
+      document.removeEventListener('mousemove', drag);
+      document.removeEventListener('mouseup', stopDrag);
+    };
+  }, [isDragging, drag, stopDrag]);
 
-  const newCoords: Coordinates = {
-    top: topCoordinatesLocal,
-    left: leftCoordinatesLocal,
+  return {
+    transform: `translate(${dragOffset.x}px, ${dragOffset.y}px)`,
+    isDragging,
+    startDrag,
   };
-
-  return { startDrag, newCoords, isDrag };
 };
-
-export { useDragNDrop };

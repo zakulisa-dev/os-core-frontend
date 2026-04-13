@@ -1,0 +1,14 @@
+{
+  "chooseDifficulty": "Choose difficulty",
+  "changeDifficulty": "Change difficulty",
+  "start": "Start",
+  "restart": "Restart",
+  "level": "Level",
+  "difficulty": "Difficulty",
+  "difficulties": {
+    "Easy": "Easy",
+    "Normal": "Normal",
+    "Hard": "Hard",
+    "Extreme": "Extreme"
+  }
+}

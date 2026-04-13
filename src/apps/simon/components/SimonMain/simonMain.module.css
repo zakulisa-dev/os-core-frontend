@@ -1,0 +1,58 @@
+.wrapper {
+  display: flex;
+
+  height: 100%;
+  padding: 0.2rem 1rem;
+}
+
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+
+  width: 70%;
+  margin: 1rem 1.4rem;
+}
+
+.buttons button:disabled {
+  cursor: default;
+}
+
+.buttons button:nth-child(1) {
+  background-color: #e51414;
+}
+
+.buttons button:nth-child(2) {
+  background-color: #02a202;
+}
+
+.buttons button:nth-child(3) {
+  background-color: #f6f623;
+}
+
+.buttons button:nth-child(4) {
+  background-color: #1c1cdd;
+}
+
+.buttons button:nth-child(5) {
+  background-color: #931cdd;
+}
+
+.buttons button:nth-child(6) {
+  background-color: #dd1c69;
+}
+
+.buttons button:nth-child(7) {
+  background-color: #aceaa6;
+}
+
+.buttons button:nth-child(8) {
+  background-color: #d99c21;
+}
+
+.buttons button:nth-child(9) {
+  background-color: #2fefe7;
+}
+
+.btnActive {
+  filter: opacity(30%) !important;
+}

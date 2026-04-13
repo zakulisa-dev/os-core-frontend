@@ -1,0 +1,29 @@
+.operationButtons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  width: 50%;
+}
+
+.operationButton {
+  width: 31.6%;
+  height: 18%;
+  margin-left: 2%;
+}
+
+.operationButton:nth-child(3n-2) {
+  margin-left: 1%;
+}
+
+.enterButton {
+  width: 99%;
+  height: 40%;
+  margin-left: 1%;
+}
+
+.clearOneButton {
+  width: 65.2%;
+  height: 18%;
+  margin-left: 2%;
+}

@@ -1,0 +1,51 @@
+.addItemButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin: 0 1.1rem;
+  padding: 0.2rem;
+
+  color: #178517;
+  background: transparent;
+
+  font-size: 1.5rem;
+}
+
+.input {
+  width: 100%;
+  margin: 0 0.2rem;
+  padding: 0.05rem 0.5rem;
+
+  border: 3px solid #585656;
+  border-radius: 0.3rem;
+  outline: none;
+  background-color: var(--secondaryColor);
+
+  font-size: 1.5rem;
+}
+
+.input:focus {
+  border: 3px solid #046eb5;
+}
+
+.addContainer {
+  position: absolute;
+  bottom: 0;
+  padding: 5px;
+
+  width: 100%;
+
+  border-collapse: collapse;
+  background-color: var(--windowBodyBackground);
+}
+
+.form {
+  display: flex;
+
+  width: 100%;
+}
+
+.inputError:focus {
+  border: 3px solid #871b1b !important;
+}

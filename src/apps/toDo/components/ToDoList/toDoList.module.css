@@ -1,0 +1,245 @@
+.container {
+  height: calc(100%);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  overflow: hidden;
+}
+
+/* Заголовок */
+.header {
+  flex-shrink: 0;
+  padding: 0 10px 0 10px;
+}
+
+.title {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.filterIndicator {
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: rgba(100, 200, 255, 0.8);
+  background: rgba(100, 200, 255, 0.1);
+  padding: 0.25rem 0.5rem;
+  border-radius: 12px;
+  border: 1px solid rgba(100, 200, 255, 0.2);
+}
+
+/* Статистика */
+.stats {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.counter {
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.7);
+  white-space: nowrap;
+}
+
+.progressBar {
+  flex: 1;
+  min-width: 100px;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.progress {
+  height: 100%;
+  background: linear-gradient(90deg, rgba(81, 207, 102, 0.8), rgba(81, 207, 102, 1));
+  border-radius: 3px;
+  transition: width 0.3s ease;
+}
+
+.clearButton {
+  background: rgba(255, 107, 107, 0.1);
+  color: rgba(255, 107, 107, 0.9);
+  border: 1px solid rgba(255, 107, 107, 0.2);
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.clearButton:hover {
+  background: rgba(255, 107, 107, 0.15);
+  border-color: rgba(255, 107, 107, 0.3);
+  color: rgba(255, 107, 107, 1);
+  transform: translateY(-1px);
+}
+
+.clearButton:active {
+  transform: translateY(0);
+}
+
+/* Контент */
+.content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 1rem 1rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-bottom: 50px;
+}
+
+/* Кастомный скроллбар */
+.content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.content::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+}
+
+.content::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Секции */
+.section {
+  flex-shrink: 0;
+}
+
+.sectionTitle {
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-bottom: 0.75rem;
+  color: rgba(255, 255, 255, 0.7);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.sectionTitle::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(100, 200, 255, 0.8);
+}
+
+/* Контейнер для задач */
+.toDoItemsContainer {
+  width: 100%;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* Пустое состояние */
+.emptyState {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  opacity: 0.6;
+  padding: 2rem;
+}
+
+.emptyIcon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  opacity: 0.5;
+}
+
+.emptyTitle {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.emptyDescription {
+  margin: 0;
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* Анимации */
+.section {
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Адаптивность */
+@media (max-width: 640px) {
+  .stats {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+  }
+
+  .counter {
+    text-align: center;
+  }
+
+  .clearButton {
+    align-self: center;
+  }
+
+  .container {
+    gap: 0.25rem;
+  }
+
+  .header {
+    padding: 0.75rem 0.75rem 0 0.75rem;
+  }
+
+  .content {
+    padding: 0 0.75rem 0.75rem 0.75rem;
+  }
+
+  .title {
+    font-size: 1.25rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .filterIndicator {
+    font-size: 0.8rem;
+  }
+}
+
+/* Состояния загрузки и ошибок */
+.container:has(.loading),
+.container:has(.error) {
+  justify-content: center;
+  align-items: center;
+}

@@ -1,0 +1,76 @@
+/* components/DesktopIcon/DesktopIcon.module.css */
+.desktopIcon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 70px;
+  height: 70px;
+  cursor: pointer;
+  border-radius: 8px;
+  padding: 8px;
+  transition: background-color 0.2s ease;
+}
+
+.desktopIcon:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.desktopIcon.selected {
+  background-color: rgba(0, 120, 215, 0.3);
+  border: 1px solid rgba(0, 120, 215, 0.6);
+}
+
+.desktopIcon.dragging {
+  opacity: 0.8;
+  z-index: 1000;
+  transform: rotate(2deg);
+}
+
+.iconContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  margin-bottom: 4px;
+}
+
+.iconImage {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+  border-radius: 4px;
+}
+
+.iconEmoji {
+  font-size: 32px;
+  line-height: 1;
+}
+
+.iconLabel {
+  font-size: 12px;
+  color: white;
+  text-align: center;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+  max-width: 100%;
+  line-height: 1.2;
+
+  /* Ограничиваем до одной строки */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.desktopIcon.selected .iconLabel {
+  color: white;
+}
+
+/* Анимации при перетаскивании */
+.desktopIcon.dragging .iconContainer {
+  transform: scale(1.1);
+}
+
+/* Эффект при наведении */
+.desktopIcon:active .iconContainer {
+  transform: scale(0.95);
+}

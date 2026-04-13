@@ -1,10 +1,7 @@
-// Libraries
 import React, { FC } from 'react';
 
-// Interfaces
 import { ChildrenNever } from '@Interfaces/childrenNever.interface';
 
-// Styles
 import styles from './inDevelopment.module.css';
 
 const InDevelopment: FC<ChildrenNever> = React.memo(() => (
@@ -12,5 +9,7 @@ const InDevelopment: FC<ChildrenNever> = React.memo(() => (
     <p>In development</p>
   </div>
 ));
+
+InDevelopment.displayName = 'InDevelopment';
 
 export { InDevelopment };

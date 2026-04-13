@@ -1,0 +1,33 @@
+{
+  "language": "언어",
+  "wallpaper": "배경화면",
+  "theme": "테마",
+  "reset": "재설정",
+  "languages": {
+    "en": "English",
+    "ru": "Русский",
+    "es": "Español",
+    "ja": "日本語",
+    "ko": "한국어",
+    "th": "ไทย",
+    "vi": "Tiếng Việt"
+  },
+  "backgrounds": {
+    "Planet": "행성",
+    "Fog": "안개",
+    "Sea": "바다",
+    "Car": "자동차",
+    "Tree": "나무",
+    "Cat": "고양이",
+    "Dynamic": "비 (동적)",
+    "Dynamic2": "비 2 (동적)",
+    "House": "집 (동적)",
+    "Waterfall": "폭포 (동적)"
+  },
+  "themes": {
+    "Dark": "다크",
+    "Light": "라이트",
+    "Blue": "블루",
+    "Green": "그린"
+  }
+}

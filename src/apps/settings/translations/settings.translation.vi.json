@@ -1,0 +1,33 @@
+{
+  "language": "Ngôn ngữ",
+  "wallpaper": "Hình nền",
+  "theme": "Chủ đề",
+  "reset": "Đặt lại",
+  "languages": {
+    "en": "English",
+    "ru": "Русский",
+    "es": "Español",
+    "ja": "日本語",
+    "ko": "한국어",
+    "th": "ไทย",
+    "vi": "Tiếng Việt"
+  },
+  "backgrounds": {
+    "Planet": "Hành tinh",
+    "Fog": "Sương mù",
+    "Sea": "Biển",
+    "Car": "Xe hơi",
+    "Tree": "Cây",
+    "Cat": "Mèo",
+    "Dynamic": "Mưa (động)",
+    "Dynamic2": "Mưa 2 (động)",
+    "House": "Nhà (động)",
+    "Waterfall": "Thác nước (động)"
+  },
+  "themes": {
+    "Dark": "Tối",
+    "Light": "Sáng",
+    "Blue": "Xanh dương",
+    "Green": "Xanh lá"
+  }
+}
