@@ -7,25 +7,29 @@ import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import space from '@Backgrounds/space.webp';
 import { ChildrenNever } from '@Interfaces/childrenNever.interface';
 import { Button } from '@Components/Button/Button';
+import { useLogin } from '@Features/user/user.queries';
 
 import styles from './login.module.css';
 
-const Login: FC<ChildrenNever> = () => {
-  const [formError, setFormError] = useState('');
-  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+interface LoginForm {
+  username: string;
+  password: string;
+}
 
+const Login: FC<ChildrenNever> = () => {
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const navigate = useNavigate();
+  const { mutate: login, isPending, error } = useLogin();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm<LoginForm>();
 
-  function handleLogin(): void {}
-
-  function handleTooglePasswordVisible(): void {
-    setIsPasswordVisible((value) => !value);
-  }
+  const handleLogin = ({ username, password }: LoginForm) => {
+    login({ username, password });
+  };
 
   return (
     <>
@@ -35,12 +39,12 @@ const Login: FC<ChildrenNever> = () => {
           ←
         </Button>
         <form className={styles.loginForm} onSubmit={handleSubmit(handleLogin)}>
-          <span className={`${styles.formErrorDefault} ${formError ? styles.formError : ''}`}>
-            {formError || 'Error'}
+          <span className={`${styles.formErrorDefault} ${error ? styles.formError : ''}`}>
+            {error?.message || 'Error'}
           </span>
           <label htmlFor="loginName" className={styles.label}>
             <span className={`${styles.inputErrorDefault} ${errors.username ? styles.inputError : ''}`}>
-              {(errors.username?.message as string) || 'Error'}
+              {errors.username?.message || 'Error'}
             </span>
             <div className={styles.inputBtnContainer}>
               <div className={styles.empty} />
@@ -49,12 +53,8 @@ const Login: FC<ChildrenNever> = () => {
                 id="loginName"
                 placeholder="Username"
                 className={errors.username ? styles.invalidInput : ''}
-                onFocus={() => setFormError('')}
                 {...register('username', {
-                  required: {
-                    value: true,
-                    message: 'You must fill this field',
-                  },
+                  required: 'You must fill this field',
                 })}
               />
               <div className={styles.empty} />
@@ -62,30 +62,29 @@ const Login: FC<ChildrenNever> = () => {
           </label>
           <label htmlFor="loginPassword" className={styles.label}>
             <span className={`${styles.inputErrorDefault} ${errors.password ? styles.inputError : ''}`}>
-              {(errors.password?.message as string) || 'Error'}
+              {errors.password?.message || 'Error'}
             </span>
             <div className={styles.inputBtnContainer}>
               <div className={styles.empty} />
               <input
                 type={isPasswordVisible ? 'text' : 'password'}
                 id="loginPassword"
-                className={errors.password ? styles.invalidInput : ''}
                 placeholder="Password"
-                onFocus={() => setFormError('')}
+                className={errors.password ? styles.invalidInput : ''}
                 {...register('password', {
-                  required: {
-                    value: true,
-                    message: 'You must fill this field',
-                  },
+                  required: 'You must fill this field',
                 })}
               />
-              <Button className={styles.changePasswordVisibility} onClick={handleTooglePasswordVisible}>
-                {isPasswordVisible ? <FontAwesomeIcon icon={faEyeSlash} /> : <FontAwesomeIcon icon={faEye} />}
+              <Button
+                className={styles.changePasswordVisibility}
+                onClick={() => setIsPasswordVisible((v) => !v)}
+              >
+                <FontAwesomeIcon icon={isPasswordVisible ? faEyeSlash : faEye} />
               </Button>
             </div>
           </label>
           <div className={styles.btnContainer}>
-            <Button type="submit" disabled={false} className={styles.signIn}>
+            <Button type="submit" disabled={isPending} className={styles.signIn}>
               Sign In
             </Button>
           </div>
