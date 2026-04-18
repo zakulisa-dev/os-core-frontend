@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -7,40 +7,32 @@ import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { ChildrenNever } from '@Interfaces/childrenNever.interface';
 import space from '@Backgrounds/space.webp';
 import { Button } from '@Components/Button/Button';
+import { useRegister } from '@Features/user/user.queries';
 
 import styles from './registration.module.css';
 
+interface RegistrationForm {
+  username: string;
+  password: string;
+  passwordConfirmation: string;
+}
+
 const Registration: FC<ChildrenNever> = () => {
-  const [formError, setFormError] = useState('');
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isPasswordVisible2, setIsPasswordVisible2] = useState(false);
-  const registrationError = '';
-  const isRegistrationLoading = false;
-
   const navigate = useNavigate();
+  const { mutate: registerUser, isPending, error } = useRegister();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
     getValues,
-  } = useForm({
-    mode: 'onBlur',
-  });
+  } = useForm<RegistrationForm>({ mode: 'onBlur' });
 
-  useEffect(() => {
-    setFormError(registrationError);
-  }, [registrationError]);
-
-  function handleTogglePasswordVisible() {
-    setIsPasswordVisible((value) => !value);
-  }
-
-  function handleTogglePasswordVisible2() {
-    setIsPasswordVisible2((value) => !value);
-  }
-
-  function handleRegistration() {
-  }
+  const handleRegistration = ({ username, password }: RegistrationForm) => {
+    registerUser({ username, password });
+  };
 
   return (
     <>
@@ -50,12 +42,12 @@ const Registration: FC<ChildrenNever> = () => {
           ←
         </Button>
         <form className={styles.loginForm} onSubmit={handleSubmit(handleRegistration)}>
-          <span className={`${styles.formErrorDefault} ${formError ? styles.formError : ''}`}>
-            {formError || 'error'}
+          <span className={`${styles.formErrorDefault} ${error ? styles.formError : ''}`}>
+            {error?.message || 'Error'}
           </span>
           <label htmlFor="loginName" className={styles.label}>
             <span className={`${styles.inputErrorDefault} ${errors.username ? styles.inputError : ''}`}>
-              {(errors.username?.message as never) || 'Error'}
+              {errors.username?.message || 'Error'}
             </span>
             <div className={styles.inputBtnContainer}>
               <div className={styles.empty} />
@@ -64,24 +56,14 @@ const Registration: FC<ChildrenNever> = () => {
                 id="loginName"
                 placeholder="Username"
                 className={errors.username ? styles.invalidInput : ''}
-                onFocus={() => setFormError('')}
                 {...register('username', {
-                  required: {
-                    value: true,
-                    message: 'You must fill this field',
-                  },
+                  required: 'You must fill this field',
                   pattern: {
                     value: /^[A-z0-9_-]+$/,
                     message: 'Username must contain only letters, numbers, dash and underscore',
                   },
-                  minLength: {
-                    value: 5,
-                    message: 'Username must be at least 5 characters',
-                  },
-                  maxLength: {
-                    value: 20,
-                    message: 'Username must be no more then 20 characters',
-                  },
+                  minLength: { value: 5, message: 'Username must be at least 5 characters' },
+                  maxLength: { value: 20, message: 'Username must be no more than 20 characters' },
                 })}
               />
               <div className={styles.empty} />
@@ -89,59 +71,54 @@ const Registration: FC<ChildrenNever> = () => {
           </label>
           <label htmlFor="loginPassword" className={styles.label}>
             <span className={`${styles.inputErrorDefault} ${errors.password ? styles.inputError : ''}`}>
-              {(errors.password?.message as never) || 'Error'}
+              {errors.password?.message || 'Error'}
             </span>
             <div className={styles.inputBtnContainer}>
               <div className={styles.empty} />
               <input
                 type={isPasswordVisible ? 'text' : 'password'}
                 id="loginPassword"
-                className={errors.password ? styles.invalidInput : ''}
                 placeholder="Password"
-                onFocus={() => setFormError('')}
+                className={errors.password ? styles.invalidInput : ''}
                 {...register('password', {
-                  required: {
-                    value: true,
-                    message: 'You must fill this field',
-                  },
-                  minLength: {
-                    value: 5,
-                    message: 'Password must be at least 5 characters',
-                  },
-                  maxLength: {
-                    value: 20,
-                    message: 'Password must be no more then 20 characters',
-                  },
+                  required: 'You must fill this field',
+                  minLength: { value: 5, message: 'Password must be at least 5 characters' },
+                  maxLength: { value: 20, message: 'Password must be no more than 20 characters' },
                 })}
               />
-              <Button className={styles.changePasswordVisibility} onClick={handleTogglePasswordVisible}>
-                {isPasswordVisible ? <FontAwesomeIcon icon={faEyeSlash} /> : <FontAwesomeIcon icon={faEye} />}
+              <Button
+                className={styles.changePasswordVisibility}
+                onClick={() => setIsPasswordVisible((v) => !v)}
+              >
+                <FontAwesomeIcon icon={isPasswordVisible ? faEyeSlash : faEye} />
               </Button>
             </div>
           </label>
-          <label htmlFor="loginPassword" className={styles.label}>
+          <label htmlFor="loginPasswordConfirmation" className={styles.label}>
             <span className={`${styles.inputErrorDefault} ${errors.passwordConfirmation ? styles.inputError : ''}`}>
-              {(errors.passwordConfirmation?.message as never) || 'Error'}
+              {errors.passwordConfirmation?.message || 'Error'}
             </span>
             <div className={styles.inputBtnContainer}>
               <div className={styles.empty} />
               <input
                 type={isPasswordVisible2 ? 'text' : 'password'}
                 id="loginPasswordConfirmation"
-                className={errors.passwordConfirmation ? styles.invalidInput : ''}
                 placeholder="Password confirmation"
-                onFocus={() => setFormError('')}
+                className={errors.passwordConfirmation ? styles.invalidInput : ''}
                 {...register('passwordConfirmation', {
-                  validate: (value) => value === getValues('password') || 'Passwords should be equals',
+                  validate: (value) => value === getValues('password') || 'Passwords should be equal',
                 })}
               />
-              <Button className={styles.changePasswordVisibility} onClick={handleTogglePasswordVisible2}>
-                {isPasswordVisible2 ? <FontAwesomeIcon icon={faEyeSlash} /> : <FontAwesomeIcon icon={faEye} />}
+              <Button
+                className={styles.changePasswordVisibility}
+                onClick={() => setIsPasswordVisible2((v) => !v)}
+              >
+                <FontAwesomeIcon icon={isPasswordVisible2 ? faEyeSlash : faEye} />
               </Button>
             </div>
           </label>
           <div className={styles.btnContainer}>
-            <Button type="submit" className={styles.signUp} disabled={isRegistrationLoading}>
+            <Button type="submit" className={styles.signUp} disabled={isPending}>
               Sign Up
             </Button>
           </div>
